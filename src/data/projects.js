@@ -1,0 +1,5 @@
+const projects = [
+  { name: 'MindSync', image: 'mindsync-dashboard.png', description: 'MindSync is a mental wellness platform designed to help students track their emotional well-being, practice self-care, and access AI-powered support. It connects students with verified mental health professionals.', tech: ['React.js', 'TypeScript', 'Vite', 'Node.js', 'Express.js', 'Supabase', 'PostgreSQL', 'Groq API', 'React Router', 'Lucide React'], status: 'Live', code: 'https://github.com/shivam-coder567/MindSync-Wellbeing-Platform', demo: 'https://mind-sync-wellbeing-platform.vercel.app/login' },
+  { name: 'ExpiryMitra', image: 'expirymitra-dashboard.png', description: 'ExpiryMitra is a full-stack grocery inventory, expiry tracking, and POS application with OCR-based product data extraction, AI integration, and inventory management.', tech: ['HTML', 'CSS', 'JavaScript', 'ZXing', 'Node.js', 'Express.js', 'Firebase', 'Open Food Facts', 'PaddleOCR'], status: 'Live', code: 'https://github.com/shivam-coder567/ExpiryMitra', demo: 'https://realexpirymitra.onrender.com/' },
+];
+export default projects;
