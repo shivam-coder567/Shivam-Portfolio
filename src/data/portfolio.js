@@ -9,7 +9,7 @@ export const portfolio = {
     'Also using': ['AI APIs', 'Git', 'GitHub'],
   },
   contact: {
-    email: 'gmail-shivammishra5751@gmail.com',
+    email: 'shivammishra5751@gmail.com',
     github: 'https://github.com/shivam-coder567',
     linkedin: 'https://www.linkedin.com/in/shivam-mishra-145aaa427/',
   },
