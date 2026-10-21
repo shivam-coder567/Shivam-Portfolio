@@ -1,10 +1,11 @@
 import { Component, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Html, Stars, useTexture } from '@react-three/drei';
+import { Html, Preload, Stars, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 const RADIUS = 1;
 const TEXTURE_URL = '/textures/earth_atmos_2048.jpg';
+useTexture.preload(TEXTURE_URL);
 const INITIAL_DISTANCE = 3.35;
 const MIN_DISTANCE = 2.35;
 const MAX_DISTANCE = 4.5;
@@ -70,7 +71,7 @@ function PulseRing({ color, reduceMotion }) {
   </mesh>;
 }
 
-function Earth({ groupRef, reduceMotion, isMobile, onReady }) {
+function Earth({ groupRef, reduceMotion, isMobile }) {
   const texture = useTexture(TEXTURE_URL);
   const gl = useThree((state) => state.gl);
   const initialRotation = useMemo(() => {
@@ -85,12 +86,11 @@ function Earth({ groupRef, reduceMotion, isMobile, onReady }) {
   }, []);
   const segments = isMobile ? 48 : 64;
   useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
+    if (texture.colorSpace !== THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = Math.min(gl.capabilities.getMaxAnisotropy(), 8);
     texture.needsUpdate = true;
-    onReady();
     // useTexture shares a cached texture; don't dispose or clear it on unmount.
-  }, [gl, onReady, texture]);
+  }, [gl, texture]);
   return <group ref={groupRef} quaternion={initialRotation}>
     <mesh>
       <sphereGeometry args={[RADIUS, segments, segments]} />
@@ -153,6 +153,10 @@ function InteractionController({ groupRef, interactionRef, reduceMotion, active 
 }
 
 function Fallback() { return <mesh><sphereGeometry args={[1, 32, 32]} /><meshStandardMaterial color="#193e79" roughness={0.8} /></mesh>; }
+function Reveal({ onReady }) {
+  useEffect(() => { onReady(); }, [onReady]);
+  return null;
+}
 class TextureBoundary extends Component {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
@@ -186,12 +190,6 @@ export default function EarthScene({ reduceMotion }) {
     window.addEventListener('resize', updateSize);
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', updateVisibility); window.removeEventListener('resize', updateSize); };
   }, []);
-
-  useEffect(() => {
-    if (ready) return undefined;
-    const timeout = window.setTimeout(() => setReady(true), 8000);
-    return () => window.clearTimeout(timeout);
-  }, [ready]);
 
   useEffect(() => {
     const element = container.current;
@@ -260,15 +258,15 @@ export default function EarthScene({ reduceMotion }) {
     return () => { element.removeEventListener('pointerdown', onPointerDown); element.removeEventListener('pointermove', onPointerMove); element.removeEventListener('pointerup', endPointer); element.removeEventListener('pointercancel', endPointer); element.removeEventListener('lostpointercapture', endPointer); element.removeEventListener('wheel', onWheel); points.clear(); };
   }, []);
 
-  const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 1.75);
+  const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
   return <div className={`earth-canvas ${ready ? 'is-ready' : ''} ${contextLost ? 'is-context-lost' : ''}`} ref={container}>
     {!ready && <div className="earth-loading-indicator" role="status" aria-label="Loading Earth"><span /></div>}
-    <Canvas aria-label="Interactive globe showing Prayagraj, India" role="img" frameloop={active && !contextLost ? 'always' : 'never'} dpr={dpr} camera={{ position: [0, 0, INITIAL_DISTANCE], fov: 38 }} gl={{ alpha: true, antialias: !isMobile, powerPreference: 'high-performance' }} onCreated={({ camera }) => { cameraRef.current = camera; }}>
+    <Canvas aria-label="Interactive globe showing Prayagraj, India" role="img" frameloop={active && !contextLost ? 'always' : 'never'} dpr={dpr} resize={{ debounce: 0, scroll: false }} camera={{ position: [0, 0, INITIAL_DISTANCE], fov: 38 }} gl={{ alpha: true, antialias: !isMobile, powerPreference: 'high-performance' }} onCreated={({ camera }) => { cameraRef.current = camera; }}>
       <ambientLight intensity={1.15} /><directionalLight position={[-3, 2, 4]} intensity={3.4} color="#d5eaff" />
       <Stars radius={60} depth={40} count={isMobile ? 500 : 1100} factor={2.2} saturation={0.35} fade speed={reduceMotion ? 0 : 0.25} />
       <RendererLifecycle onContextLost={onContextLost} onContextRestored={onContextRestored} />
       <InteractionController groupRef={groupRef} interactionRef={interactionRef} reduceMotion={reduceMotion} active={active && !contextLost} />
-      <TextureBoundary onFailure={onFailure}><Suspense fallback={<Fallback />}><Earth groupRef={groupRef} reduceMotion={reduceMotion} isMobile={isMobile} onReady={onReady} /></Suspense></TextureBoundary>
+      <TextureBoundary onFailure={onFailure}><Suspense fallback={null}><Earth groupRef={groupRef} reduceMotion={reduceMotion} isMobile={isMobile} /><Preload all /><Reveal onReady={onReady} /></Suspense></TextureBoundary>
     </Canvas>
   </div>;
 }

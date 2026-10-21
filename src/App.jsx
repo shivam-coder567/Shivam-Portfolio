@@ -7,6 +7,7 @@ import Skills from './components/Skills.jsx';
 import Projects from './components/Projects.jsx';
 import GithubContributions from './components/GithubContributions.jsx';
 import Contact from './components/Contact.jsx';
+import PortfolioViews from './components/PortfolioViews.jsx';
 import { portfolio } from './data/portfolio.js';
 import './App.css';
 
@@ -35,5 +36,5 @@ export default function App() {
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
-  return <><Navbar activeSection={activeSection} theme={theme} onToggleTheme={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')} /><main><Hero reduceMotion={Boolean(reduceMotion)} githubUrl={GITHUB_URL} linkedinUrl={LINKEDIN_URL} /><About /><Projects reduceMotion={Boolean(reduceMotion)} /><GithubContributions /><Skills /><Contact githubUrl={GITHUB_URL} linkedinUrl={LINKEDIN_URL} email={portfolio.contact.email} /></main><footer className="site-footer section-shell"><a className="footer-brand" href="#home"><span className="brand-mark">SM</span> Shivam Mishra</a><span>Designed &amp; built with curiosity.</span><span>© {new Date().getFullYear()}</span></footer></>;
+  return <><Navbar activeSection={activeSection} theme={theme} onToggleTheme={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')} /><main><Hero reduceMotion={Boolean(reduceMotion)} githubUrl={GITHUB_URL} linkedinUrl={LINKEDIN_URL} /><About /><Projects reduceMotion={Boolean(reduceMotion)} /><GithubContributions /><Skills reduceMotion={Boolean(reduceMotion)} /><Contact githubUrl={GITHUB_URL} linkedinUrl={LINKEDIN_URL} email={portfolio.contact.email} /></main><footer className="site-footer section-shell"><div className="footer-identity"><a className="footer-brand" href="#home"><span className="brand-mark footer-avatar"><img src="/images/shivam.png" alt="" /></span> Shivam Mishra</a><PortfolioViews /></div><span>Designed &amp; built with curiosity.</span><span>© {new Date().getFullYear()}</span></footer></>;
 }

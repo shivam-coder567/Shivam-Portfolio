@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { BrainCircuit, Coffee, Network } from 'lucide-react';
 import {
   siC, siCss, siGit, siGithub, siHtml5, siJavascript, siMysql, siPostgresql, siReact, siSpringboot, siTypescript,
@@ -22,10 +23,10 @@ const skills = [
   { name: 'GitHub', simpleIcon: siGithub, color: '#dce5f5', description: 'Used to host projects and share my development work.' },
 ];
 
-function SkillCard({ skill }) {
+function SkillCard({ skill, index, reduceMotion }) {
   const [open, setOpen] = useState(false);
   const Icon = skill.icon;
-  return <button
+  return <motion.button
     type="button"
     className={`skill-icon-card${open ? ' is-open' : ''}`}
     style={{ '--skill-accent': skill.color }}
@@ -33,21 +34,25 @@ function SkillCard({ skill }) {
     aria-expanded={open}
     onClick={() => setOpen((value) => !value)}
     onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}
+    initial={reduceMotion ? false : { opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: false, amount: .2 }}
+    transition={{ duration: .38, delay: reduceMotion ? 0 : index * .025, ease: [.22, 1, .36, 1] }}
   >
     <span className="skill-icon-mark" aria-hidden="true">
       {skill.simpleIcon ? <svg viewBox="0 0 24 24"><path d={skill.simpleIcon.path} /></svg> : <Icon size={28} strokeWidth={1.8} />}
     </span>
     <span className="skill-detail" aria-hidden="true"><strong>{skill.name}</strong><span>{skill.description}</span></span>
-  </button>;
+  </motion.button>;
 }
 
-export default function Skills() {
+export default function Skills({ reduceMotion }) {
   return <section className="skills section-shell content-section" id="skills" aria-labelledby="skills-heading">
     <Reveal className="section-kicker"><span>04</span><span className="kicker-rule" /> SKILLS</Reveal>
     <Reveal className="projects-heading skills-heading" delay={.06}><h2 id="skills-heading">Skills</h2><p>What I use while learning and building.</p></Reveal>
     <Reveal as="p" className="skills-instruction" delay={.08}>Hover or focus an icon for the full story →</Reveal>
     <div className="skills-icons" aria-label="Technologies and tools">
-      {skills.map((skill) => <SkillCard key={skill.name} skill={skill} />)}
+      {skills.map((skill, index) => <SkillCard key={skill.name} skill={skill} index={index} reduceMotion={reduceMotion} />)}
     </div>
   </section>;
 }

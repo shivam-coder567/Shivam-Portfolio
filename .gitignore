@@ -27,3 +27,4 @@ Thumbs.db
 
 # Local ZIP backups
 *.zip
+.env.example

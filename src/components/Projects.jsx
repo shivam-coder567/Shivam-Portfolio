@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 import { motion } from 'framer-motion';
+import useScrollDirection from '../hooks/useScrollDirection.js';
 import { ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 import {
   siReact, siTypescript, siVite, siNodedotjs, siExpress, siSupabase,
@@ -34,6 +35,7 @@ function TechnologyBadge({ technology }) {
 }
 function ProjectCard({ project, index, reduceMotion }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const scrollDirection = useScrollDirection();
   const imagePath = `../assets/projects/${project.image}`;
   const image = projectImages[imagePath];
   const links = [
@@ -43,7 +45,7 @@ function ProjectCard({ project, index, reduceMotion }) {
   const title = project.name === 'MindSync'
     ? <>Mind<span className="project-name-accent">Sync</span></>
     : <>Expiry<span className="project-name-accent">Mitra</span></>;
-  return <motion.article className={`project-card project-card-${index + 1}`} initial={reduceMotion ? false : { opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} whileHover={reduceMotion ? undefined : { y: -4, transition: { duration: .2 } }} transition={{ duration: .52, delay: reduceMotion ? 0 : index * .08, ease: revealEase }}>
+  return <motion.article className={`project-card project-card-${index + 1}`} initial={reduceMotion ? false : { opacity: 0, y: scrollDirection === 'down' ? 14 : -14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} whileHover={reduceMotion ? undefined : { y: -4, transition: { duration: .2 } }} transition={{ duration: .52, delay: reduceMotion ? 0 : index * .08, ease: revealEase }}>
     <div className="project-screenshot">{image && !imageFailed && <img src={image} alt={`${project.name} dashboard screenshot`} loading="lazy" onError={() => setImageFailed(true)} />}</div>
     <div className="project-card-body"><div className="project-card-title-row"><h3>{title}</h3><span className="project-status"><i aria-hidden="true" />{project.status}</span></div><p>{project.description}</p><div className="project-tech">{project.tech.map((technology) => <TechnologyBadge technology={technology} key={technology} />)}</div><div className="project-card-divider" aria-hidden="true" /><div className="project-links">{links.map(({ label, href, Icon, className }, index) => <Fragment key={label}><a className={className} href={href} target="_blank" rel="noreferrer"><Icon size={16} aria-hidden="true" />{label}<ArrowUpRight size={13} aria-hidden="true" /></a>{index === 0 && <span className="project-link-divider" aria-hidden="true" />}</Fragment>)}</div></div>
   </motion.article>;

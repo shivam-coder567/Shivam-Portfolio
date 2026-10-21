@@ -1,34 +1,106 @@
-# Shivam Mishra | Full-Stack Developer
+# Shivam Mishra — Developer Portfolio
 
-Responsive React and Vite portfolio with a rotating Three.js Earth globe, projects, skills, and internship contact information.
+Welcome to my personal developer portfolio! This project showcases my technical skills, projects, and journey as a software developer.
 
-## Run locally
+## 🌐 Live Demo
 
-Requirements: Node.js 20.19+ or 22.12+ and npm.
+**Portfolio:** [Add your deployed website URL here]
+
+## 👨‍💻 About Me
+
+Hi, I'm **Shivam Mishra**, a Computer Science Engineering student passionate about software development and building useful web applications.
+
+- 🎓 Pursuing B.Tech in Computer Science Engineering
+- 💻 Learning web development and backend technologies
+- 🚀 Interested in building practical, real-world projects
+- 📚 Continuously improving my programming and problem-solving skills
+- 🎯 Currently working toward internship opportunities
+
+## ✨ Features
+
+- Modern and responsive portfolio design
+- About Me section
+- Projects showcase
+- GitHub profile and contributions section
+- Technical skills with icons
+- Interactive hover effects
+- Contact section for collaboration and professional opportunities
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React.js
+- **Build Tool:** Vite
+- **Styling:** CSS3
+- **Programming:** JavaScript
+- **Development Tools:** VS Code, Git, GitHub
+
+## 📂 Project Structure
+
+```text
+shivam-portfolio/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── data/
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── package-lock.json
+└── vite.config.js
+```
+
+## 🚀 Run Locally
+
+Follow these steps to run the project on your computer.
+
+**1. Clone the repository**
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+**2. Open the project directory**
+
+```bash
+cd shivam-portfolio
+```
+
+**3. Install dependencies**
 
 ```bash
 npm install
+```
+
+**4. Start the development server**
+
+```bash
 npm run dev
 ```
 
-Open the local URL printed by Vite. Create a production build with `npm run build`.
+Open the local URL displayed in your terminal to view the portfolio.
 
-## Personalize before publishing
+## 📌 Featured Projects
 
-- Replace the email, GitHub and LinkedIn placeholders in `src/data/portfolio.js`.
-- Add your resume as `public/resume.pdf`.
-- Add Code and Live demo URLs in `src/data/projects.js` when those links are available. Empty values hide the buttons.
-- Add project screenshots at `src/assets/projects/mindsync.png`, `dsa-memory-companion.png`, and `ai-expiry-tracker.png`. Cards show a gradient placeholder until a screenshot is present.
+Explore my projects through the portfolio website and GitHub profile.
 
-The About section includes a small terminal. Try `help`, `about`, `skills`, `projects`, `contact`, `resume`, `github`, and `clear`; use Up/Down for command history and Tab to complete a command.
+- **Project 1:** Add your project name and repository link.
+- **Project 2:** Add your project name and repository link.
+- **Project 3:** Add your project name and repository link.
 
-The Earth texture is served locally from `public/textures/earth_atmos_2048.jpg`. The globe uses React Three Fiber and Drei, pauses outside the viewport or when the tab is hidden, and honors reduced-motion preferences.
+## 📫 Connect With Me
 
-## Structure
+- **GitHub:** [Your GitHub Profile](YOUR_GITHUB_PROFILE_URL)
+- **LinkedIn:** [Your LinkedIn Profile](YOUR_LINKEDIN_PROFILE_URL)
+- **Email:** YOUR_EMAIL_ADDRESS
 
-```text
-src/components/       Page sections and the React Three Fiber globe
-src/data/projects.js  Project descriptions, tags, image names and links
-src/assets/projects/  Optional project screenshots
-public/textures/      Locally bundled Earth surface texture
-```
+I'm open to learning opportunities, collaboration, and connecting with fellow developers.
+
+---
+
+⭐ If you find my work interesting, feel free to explore my repositories and follow my development journey.
+
+_Built with React, Vite, and CSS by Shivam Mishra._
